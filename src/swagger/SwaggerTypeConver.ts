@@ -24,6 +24,16 @@ export default class SwaggerTypeConver {
     };
 
     /**
+     * 布尔值
+     */
+    public static readonly boolean: SwaggerPropertieEnum = {
+        name: "boolean",
+        converType(document: SwaggerDocument, entity: SwaggerEntity) {
+            return "boolean";
+        },
+    };
+
+    /**
      * 数值
      */
     public static readonly number: SwaggerPropertieEnum = {
@@ -52,7 +62,7 @@ export default class SwaggerTypeConver {
             if (entity.items && entity.items) {
                 return document.entitytoTypeName(entity.items) + "[]";
             } else {
-                throw new Error(`array 类型必须指定 items 字段` + entity);
+                throw new Error(`array 类型必须指定 items 字段 {${JSON.stringify(entity)}}`);
             }
         },
     };

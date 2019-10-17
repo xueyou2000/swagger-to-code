@@ -59,7 +59,7 @@ export type SwaggerTypes = { [key: string]: SwaggerEntitySchema };
  * Swagger字段类型
  * @description Swagger的数据类型
  */
-export type SwaggerPropertieType = "object" | "string" | "number" | "array" | "integer";
+export type SwaggerPropertieType = "object" | "string" | "number" | "array" | "integer" | "boolean";
 
 /**
  * Swagger实体字段元数据

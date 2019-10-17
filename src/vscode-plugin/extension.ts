@@ -9,33 +9,47 @@ import SwaggerDocumentMultiple from "../swagger/SwaggerDocumentMultiple.js";
 import SwaggerDocument from "../swagger/SwaggerDocument.js";
 import Control from "./control.js";
 
-// 应与 packages.contributes.jsonValidation[0].fileMatch 值相同
-const SwaggerConfigName = "swagger.json";
-
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
+    const config = vscode.workspace.getConfiguration("swagger");
+    const SwaggerConfigName = config.get<string>("filename");
+    if (!SwaggerConfigName) {
+        vscode.window.showErrorMessage("swagger配置文件名称不能为空");
+        return;
+    }
     const fileWatcher = vscode.workspace.createFileSystemWatcher(`**/${SwaggerConfigName}`);
 
-    async function reloadConfig(uri: vscode.Uri) {
-        try {
-            if (uri.scheme === "file") {
-                var config = new url.URL("file://" + path.resolve(uri.fsPath || uri.path));
-                const swaggerConfig: SwaggerConfig = JSON.parse(readFile(config));
-                const sources: SwaggerDocument[] = [];
-                for (let i = 0; i < swaggerConfig["swagger-urls"].length; ++i) {
-                    const filePath = swaggerConfig["swagger-urls"][i];
-                    const swaggerData = await readConfig(new url.URL(filePath));
-                    sources.push(new SwaggerDocument(swaggerData));
+    function reloadConfig(uri: vscode.Uri) {
+        vscode.window.withProgress(
+            {
+                title: "初始化Swagger配置",
+                location: vscode.ProgressLocation.Window,
+            },
+            async (progress, token) => {
+                try {
+                    if (uri.scheme === "file") {
+                        progress.report({ increment: 0, message: "加载Swagger配置文件" });
+                        var config = new url.URL("file://" + path.resolve(uri.fsPath || uri.path));
+                        const swaggerConfig: SwaggerConfig = JSON.parse(readFile(config));
+                        const sources: SwaggerDocument[] = [];
+                        const length = swaggerConfig["swagger-urls"].length;
+                        for (let i = 0; i < length; ++i) {
+                            const filePath = swaggerConfig["swagger-urls"][i];
+                            progress.report({ increment: ((i + 1) / length) * 100, message: "加载Swagger配置文件" });
+                            const swaggerData = await readConfig(new url.URL(filePath));
+                            sources.push(new SwaggerDocument(swaggerData));
+                        }
+                        const documents = new SwaggerDocumentMultiple(sources);
+                        Control.getSingleInstance(documents);
+                    } else {
+                        throw new Error("暂不支持的地址类型 " + uri);
+                    }
+                } catch (error) {
+                    vscode.window.showErrorMessage(error.message);
                 }
-                const documents = new SwaggerDocumentMultiple(sources);
-                Control.getSingleInstance(documents);
-            } else {
-                throw new Error("暂不支持的地址类型 " + uri);
-            }
-        } catch (error) {
-            vscode.window.showErrorMessage(error.message);
-        }
+            },
+        );
     }
 
     const uris = await vscode.workspace.findFiles(SwaggerConfigName);

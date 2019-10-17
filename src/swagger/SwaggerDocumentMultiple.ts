@@ -1,5 +1,7 @@
 import SwaggerDocument from "./SwaggerDocument";
 import { SwaggerEntitySchema } from "./interface/propertie";
+import { SwaggerPath } from "./interface/path";
+import SwaggerPathCover from "./SwaggerPathCover";
 
 /**
  * Swagger多文档管理器
@@ -59,5 +61,33 @@ export default class SwaggerDocumentMultiple {
             schema = null;
         }
         return schema;
+    }
+
+    /**
+     * 获取接口列表
+     */
+    public toInterfaceList(): SwaggerPathCover[] {
+        const { sources } = this;
+        let list: SwaggerPathCover[] = [];
+
+        sources.forEach((x) => {
+            list = list.concat(x.getInterfaces());
+        });
+
+        return list;
+    }
+
+    /**
+     * 获取实体列表
+     */
+    public toEntityList(): SwaggerEntitySchema[] {
+        const { sources } = this;
+        let list: SwaggerEntitySchema[] = [];
+
+        sources.forEach((x) => {
+            list = list.concat(x.getEntitys());
+        });
+
+        return list;
     }
 }

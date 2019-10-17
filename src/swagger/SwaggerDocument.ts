@@ -1,6 +1,8 @@
 import { Swagger } from "./interface";
 import { SwaggerEntity, SwaggerEntitySchema, SwaggerPropertieMeta, SwaggerTypes } from "./interface/propertie";
 import SwaggerTypeConver from "./SwaggerTypeConver";
+import { SwaggerPaths, SwaggerPath } from "./interface/path";
+import SwaggerPathCover from "./SwaggerPathCover";
 
 /**
  * Swagger文档对象
@@ -122,15 +124,22 @@ export default class SwaggerDocument {
             return this.types[schema.name];
         }
 
-        if (entity.type === "object" && entity.properties) {
-            for (let name in entity.properties) {
-                const entityDefin = entity.properties[name];
-                const meta: SwaggerPropertieMeta = { name, description: entityDefin.description || name, type: "any" };
-                meta.type = this.entitytoTypeName(entityDefin);
+        if (entity.type === "object") {
+            if (entity.properties) {
+                for (let name in entity.properties) {
+                    const entityDefin = entity.properties[name];
+                    const meta: SwaggerPropertieMeta = { name, description: entityDefin.description || name, type: "any" };
+                    meta.type = this.entitytoTypeName(entityDefin);
+                    schema.properties.push(meta);
+                }
+            } else {
+                // 真object类型
+                const meta: SwaggerPropertieMeta = { name: entity.title, description: entity.description || entity.title, type: "object" };
                 schema.properties.push(meta);
             }
         } else {
-            throw new Error("无法转换实体对象" + entity);
+            console.error(entity);
+            throw new Error(`无法转换实体对象 {${JSON.stringify(entity)}}`);
         }
 
         // 加入缓存
@@ -147,11 +156,10 @@ export default class SwaggerDocument {
         let _entity: SwaggerEntity;
         if ("$ref" in entity) {
             if (!entity.$ref) {
-                throw new Error("$ref必须赋值 " + entity);
+                throw new Error(`$ref必须赋值 {${JSON.stringify(entity)}}`);
             }
-            // 将引用类型也加入缓存
-            this.toEntitySchema(entity.$ref);
-            // _entity = this.findEntity(entity.$ref);
+            // 将引用类型也加入缓存 (error: 这样照成堆栈调用溢出)
+            // this.toEntitySchema(entity.$ref);
             return this.converEntityName(entity.$ref);
         } else {
             _entity = entity;
@@ -168,5 +176,60 @@ export default class SwaggerDocument {
      */
     public cleanTypes() {
         this._types = {};
+    }
+
+    /**
+     * 获取Swagger数据
+     */
+    public get swaggerRaw() {
+        return this.swagger;
+    }
+
+    /**
+     * 选择接口(优先选择post)
+     * @description 在很多请求方法中选择最优的
+     * @param paths
+     */
+    private pickerInterface(paths: SwaggerPaths) {
+        if ("post" in paths) {
+            if (paths.post) {
+                paths.post.method = "get";
+            }
+            return paths.post;
+        } else if ("get" in paths) {
+            if (paths.get) {
+                paths.get.method = "post";
+            }
+            return paths.get;
+        } else {
+            const method = Object.keys(paths)[0];
+            (paths as any)[method].method = method;
+            return (paths as any)[method];
+        }
+    }
+
+    /**
+     * 获取所有接口
+     */
+    public getInterfaces(): SwaggerPathCover[] {
+        const { paths } = this.swaggerRaw;
+        const result: SwaggerPathCover[] = [];
+        for (let url in paths) {
+            result.push(new SwaggerPathCover(this, url, this.pickerInterface((paths as any)[url])));
+        }
+        return result;
+    }
+
+    /**
+     * 获取所有实体
+     */
+    public getEntitys(): SwaggerEntitySchema[] {
+        const { definitions } = this.swaggerRaw;
+        const result: SwaggerEntitySchema[] = [];
+
+        for (let name in definitions) {
+            result.push(this.toEntitySchema(definitions[name]));
+        }
+        return result;
     }
 }

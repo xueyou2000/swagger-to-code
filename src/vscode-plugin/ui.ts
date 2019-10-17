@@ -22,7 +22,7 @@ export default class UI {
         this.entityBar.color = vscode.ThemeColor;
     }
 
-    render() {
+    public render() {
         const { interfaceBar, entityBar, control } = this;
         const { documents } = control;
 
@@ -31,5 +31,38 @@ export default class UI {
 
         entityBar.text = `$(database)${documents.entityCount()}`;
         entityBar.show();
+    }
+
+    /**
+     * 显示接口选择面板
+     */
+    public async showInterfacePicker() {
+        const { documents } = this.control;
+        const items: vscode.QuickPickItem[] = documents.toInterfaceList().map((x) => x.toQuickPickItem());
+        const result = await vscode.window.showQuickPick(items, {
+            matchOnDetail: true,
+        });
+
+        if (result) {
+            console.log("选择", result);
+        }
+    }
+
+    /**
+     * 显示实体选择面板
+     */
+    public async showEntityPicker() {
+        const { documents } = this.control;
+        const items: vscode.QuickPickItem[] = documents.toEntityList().map((x) => ({
+            label: x.name,
+            description: x.description,
+        }));
+        const result = await vscode.window.showQuickPick(items, {
+            matchOnDescription: true,
+        });
+
+        if (result) {
+            console.log("选择", result);
+        }
     }
 }

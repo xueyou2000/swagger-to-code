@@ -19,7 +19,8 @@ export default class SwaggerEntityFormate {
         let code = "{\n";
         const { properties } = this.schema;
         if (!properties) {
-            throw new Error("properties必须定义 " + this.schema);
+            console.error(this.schema);
+            throw new Error("properties必须定义");
         }
         properties.forEach((propertie, i) => {
             const str = `\n\t/** ${propertie.description} */\n\t${propertie.name}?: ${propertie.type};\n`;

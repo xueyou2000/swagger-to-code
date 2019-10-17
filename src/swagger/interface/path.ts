@@ -32,6 +32,14 @@ export interface SwaggerParameter extends SwaggerEntity {
  */
 export interface SwaggerPath {
     /**
+     * 请求地址
+     */
+    url?: string;
+    /**
+     * 请求方法
+     */
+    method?: "post" | "get";
+    /**
      * 所属标签
      */
     tags?: string[];

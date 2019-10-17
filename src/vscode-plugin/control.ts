@@ -28,11 +28,15 @@ export default class Control {
     }
 
     private findInterface() {
-        console.log("寻找到接口" + this.documents.pathCount);
+        if (this.ui) {
+            this.ui.showInterfacePicker();
+        }
     }
 
     private findEntity() {
-        console.log("寻找到实体" + this.documents.entityCount);
+        if (this.ui) {
+            this.ui.showEntityPicker();
+        }
     }
 
     public static initInstance(instance: Control, documents: SwaggerDocumentMultiple) {

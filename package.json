@@ -3,8 +3,9 @@
 	"displayName": "swagger-to-code",
 	"description": "swagger文档代码生成",
 	"version": "0.0.1",
-	"icon": "logo.png",
+	"icon": "./assets/logo.png",
 	"publisher": "XueYou",
+	"license": "MIT",
 	"engines": {
 		"vscode": "^1.39.0"
 	},
@@ -44,14 +45,27 @@
 				"key": "ctrl+alt+e",
 				"mac": "cmd+alt+e"
 			}
-		]
+		],
+		"configuration": {
+			"title": "SwaggerToCode",
+			"properties": {
+				"swagger.filename": {
+					"type": [
+						"string"
+					],
+					"default": "swagger.json",
+					"desc": "swagger配置文件名称"
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "yarn run compile",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"pretest": "yarn run compile",
-		"test": "node ./out/test/runTest.js"
+		"test": "node ./out/test/runTest.js",
+		"package": "vsce package"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
