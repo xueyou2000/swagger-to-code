@@ -1,0 +1,16 @@
+{
+    "title": "JSON schema for rap2ts configuration files",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "swagger-urls": {
+            "description": "swagger接口地址列表, 比如: https://petstore.swagger.io/v2/swagger.json",
+            "type": "array",
+            "default": [],
+            "uniqueItems": true,
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+}
