@@ -27,11 +27,11 @@
 		"commands": [
 			{
 				"command": "swagger.findInterface",
-				"title": "寻找接口"
+				"title": "Swagger: find interface (寻找接口)"
 			},
 			{
 				"command": "swagger.findEntity",
-				"title": "寻找实体"
+				"title": "Swagger find entity (寻找实体)"
 			}
 		],
 		"keybindings": [

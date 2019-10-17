@@ -2,6 +2,7 @@ import SwaggerDocument from "./SwaggerDocument";
 import { SwaggerEntitySchema } from "./interface/propertie";
 import { SwaggerPath } from "./interface/path";
 import SwaggerPathCover from "./SwaggerPathCover";
+import SwaggerEntityFormate from "./SwaggerEntityFormate";
 
 /**
  * Swagger多文档管理器
@@ -39,23 +40,19 @@ export default class SwaggerDocumentMultiple {
     }
 
     /**
-     * 清除已缓存类型
-     */
-    public cleanTypes() {
-        this.sources.forEach((x) => x.cleanTypes());
-    }
-
-    /**
-     * 获取实体
+     * 获取实体定义
      * @param entityName 实体名称
      * @returns 找不到则返回 null
      */
-    public toEntitySchema(entityName: string) {
+    public getEntitySchema(entityName: string) {
         const { sources } = this;
         let schema: SwaggerEntitySchema | null = null;
         try {
             for (let i = 0; i < sources.length; ++i) {
-                schema = sources[i].toEntitySchema(entityName);
+                const { definitions } = sources[i].swaggerRaw;
+                if (entityName in definitions) {
+                    schema = sources[i].toEntitySchema(entityName);
+                }
             }
         } catch (error) {
             schema = null;
@@ -64,9 +61,23 @@ export default class SwaggerDocumentMultiple {
     }
 
     /**
+     * 获取实体ts接口代码
+     * @param entityName
+     */
+    public getEntityCode(entityName: string) {
+        const schema = this.getEntitySchema(entityName);
+        if (schema) {
+            const schemaInstance = new SwaggerEntityFormate(schema);
+            return schemaInstance.toString();
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * 获取接口列表
      */
-    public toInterfaceList(): SwaggerPathCover[] {
+    public getInterfaceList(): SwaggerPathCover[] {
         const { sources } = this;
         let list: SwaggerPathCover[] = [];
 
@@ -80,7 +91,7 @@ export default class SwaggerDocumentMultiple {
     /**
      * 获取实体列表
      */
-    public toEntityList(): SwaggerEntitySchema[] {
+    public getEntityList(): SwaggerEntitySchema[] {
         const { sources } = this;
         let list: SwaggerEntitySchema[] = [];
 

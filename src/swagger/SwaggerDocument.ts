@@ -14,6 +14,11 @@ export default class SwaggerDocument {
     private swagger: Swagger;
 
     /**
+     * 是否开启类型缓存
+     */
+    private _cache: boolean = false;
+
+    /**
      * 接口数量
      */
 
@@ -158,8 +163,10 @@ export default class SwaggerDocument {
             if (!entity.$ref) {
                 throw new Error(`$ref必须赋值 {${JSON.stringify(entity)}}`);
             }
-            // 将引用类型也加入缓存 (error: 这样照成堆栈调用溢出)
-            // this.toEntitySchema(entity.$ref);
+            // 将引用类型也加入缓存
+            if (this._cache) {
+                this.toEntitySchema(entity.$ref);
+            }
             return this.converEntityName(entity.$ref);
         } else {
             _entity = entity;
@@ -172,10 +179,18 @@ export default class SwaggerDocument {
     }
 
     /**
-     * 清除已缓存类型
+     * 开启类型缓存
      */
-    public cleanTypes() {
+    public startTypeCache() {
         this._types = {};
+        this._cache = true;
+    }
+
+    /**
+     * 关闭类型缓存
+     */
+    public endTypeCache() {
+        this._cache = false;
     }
 
     /**

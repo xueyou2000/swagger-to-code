@@ -38,7 +38,7 @@ export default class UI {
      */
     public async showInterfacePicker() {
         const { documents } = this.control;
-        const items: vscode.QuickPickItem[] = documents.toInterfaceList().map((x) => x.toQuickPickItem());
+        const items: vscode.QuickPickItem[] = documents.getInterfaceList().map((x) => x.toQuickPickItem());
         const result = await vscode.window.showQuickPick(items, {
             matchOnDetail: true,
         });
@@ -53,7 +53,7 @@ export default class UI {
      */
     public async showEntityPicker() {
         const { documents } = this.control;
-        const items: vscode.QuickPickItem[] = documents.toEntityList().map((x) => ({
+        const items: vscode.QuickPickItem[] = documents.getEntityList().map((x) => ({
             label: x.name,
             description: x.description,
         }));
@@ -63,6 +63,7 @@ export default class UI {
 
         if (result) {
             console.log("选择", result);
+            console.log(documents.getEntityCode(result.label));
         }
     }
 }
