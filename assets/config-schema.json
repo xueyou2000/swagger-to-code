@@ -11,6 +11,16 @@
             "items": {
                 "type": "string"
             }
+        },
+        "out": {
+            "type": "string",
+            "description": "接口输出目录",
+            "default": "./src/api"
+        },
+        "fetch": {
+            "type": "string",
+            "description": "网络请求库地址",
+            "default": "./src/api/fetch"
         }
     }
 }

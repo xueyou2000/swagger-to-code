@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as http from "http";
 import * as https from "https";
+import * as path from "path";
 import { URL } from "url";
 
 /**
@@ -95,4 +96,62 @@ export async function readConfig(url: URL) {
         default:
             throw new Error("不支持的协议地址 " + url.href);
     }
+}
+
+/**
+ * 字符串模板替换
+ * @param {*} tpls
+ * @param {*} data
+ */
+function tpl(tpls: string, data: any) {
+    return tpls
+        .replace(/{{(.*?)}}/g, function($1, $2) {
+            return data[$2] === undefined ? $1 : data[$2];
+        })
+        .replace(/{{{(.*?)}}}/g, function($1, $2) {
+            return data[$2] === undefined ? `{${$1}}` : `{${data[$2]}}`;
+        });
+}
+
+/**
+ * 驼峰转换下划线
+ * @param {*} name
+ */
+function toLine(name: string) {
+    let result = name.replace(/([A-Z])/g, "-$1").toLowerCase();
+    if (result[0] === "-") {
+        return result.slice(1);
+    } else {
+        return result;
+    }
+}
+
+/**
+ * 首字母大写
+ * @param {*} name
+ */
+function toUpcase(name: string) {
+    return name[0].toUpperCase() + name.slice(1);
+}
+
+/**
+ * 递归创建目录
+ * @param {*} dirname
+ */
+function mkdirs(dirname: string) {
+    if (fs.existsSync(dirname)) {
+        return true;
+    } else {
+        if (mkdirs(path.dirname(dirname))) {
+            fs.mkdirSync(dirname);
+            return true;
+        }
+    }
+}
+
+/**
+ * 文件是否存在
+ */
+function exists(file: string) {
+    return fs.existsSync(file);
 }

@@ -63,7 +63,8 @@ export default class UI {
 
         if (result) {
             console.log("选择", result);
-            console.log(documents.getEntityCode(result.label));
+            this.control.generateEntity(result.label);
+            // console.log(documents.getEntityCode(result.label));
         }
     }
 }

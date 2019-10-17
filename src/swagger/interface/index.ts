@@ -76,4 +76,12 @@ export interface SwaggerConfig {
      * @example [ "https://petstore.swagger.io/v2/swagger.json" ]
      */
     "swagger-urls": string[];
+    /**
+     * 接口输出目录
+     */
+    out: string;
+    /**
+     * 网络请求库地址
+     */
+    fetch: string;
 }
