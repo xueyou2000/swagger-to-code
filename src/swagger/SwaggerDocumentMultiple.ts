@@ -5,6 +5,7 @@ import SwaggerPathCover from "./SwaggerPathCover";
 import SwaggerEntityFormate from "./SwaggerEntityFormate";
 import { SwaggerConfig } from "./interface";
 import { objectToArray } from "../vscode-plugin/utils";
+import SwaggerRequestFormate from "./SwaggerRequestFormate";
 
 /**
  * Swagger多文档管理器
@@ -75,6 +76,24 @@ export default class SwaggerDocumentMultiple {
         } else {
             return null;
         }
+    }
+
+    /**
+     * 获取接口请求
+     * @param path 请求路径
+     */
+    public getRequest(path: string): SwaggerRequestFormate | null {
+        const { sources } = this;
+        let result: SwaggerRequestFormate | null = null;
+        sources.forEach((x) => {
+            if (path in x.swaggerRaw.paths) {
+                const request = x.pickerInterface((x.swaggerRaw.paths as any)[path]);
+                if (request) {
+                    result = new SwaggerRequestFormate(x, request);
+                }
+            }
+        });
+        return result || null;
     }
 
     /**

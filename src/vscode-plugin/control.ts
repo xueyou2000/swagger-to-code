@@ -55,30 +55,63 @@ export default class Control {
      * 生成实体ts接口定义
      */
     public async generateEntity(entityName: string) {
-        const { config, documents } = this;
-
-        const folders = vscode.workspace.workspaceFolders;
-        if (folders && folders.length > 0) {
-            const uri = folders[0].uri;
-            if (uri.scheme === "file") {
-                const dist = path.resolve(uri.fsPath, config.out || "./src/api", "types");
-                documents.startTypeCache();
-                documents.getEntitySchema(entityName);
-                documents.endTypeCache();
-                const code = formateSchemas(documents.getTypeCache());
-                if (!code) {
-                    return;
-                }
-                const doc = await vscode.workspace.openTextDocument({
-                    language: "typescript",
-                    content: code,
-                });
-
-                await vscode.window.showTextDocument(doc);
-            } else {
-                console.warn("不支持的工作空间路径 " + uri);
-            }
+        const { documents } = this;
+        documents.startTypeCache();
+        documents.getEntitySchema(entityName);
+        documents.endTypeCache();
+        const code = formateSchemas(documents.getTypeCache());
+        if (!code) {
+            return;
         }
+        const doc = await vscode.workspace.openTextDocument({
+            language: "typescript",
+            content: code,
+        });
+        await vscode.window.showTextDocument(doc);
+
+        // const folders = vscode.workspace.workspaceFolders;
+        // if (folders && folders.length > 0) {
+        //     const uri = folders[0].uri;
+        //     if (uri.scheme === "file") {
+        //         const dist = path.resolve(uri.fsPath, config.out || "./src/api", "types");
+        //         documents.startTypeCache();
+        //         documents.getEntitySchema(entityName);
+        //         documents.endTypeCache();
+        //         const code = formateSchemas(documents.getTypeCache());
+        //         if (!code) {
+        //             return;
+        //         }
+        //         const doc = await vscode.workspace.openTextDocument({
+        //             language: "typescript",
+        //             content: code,
+        //         });
+        //         await vscode.window.showTextDocument(doc);
+        //     } else {
+        //         console.warn("不支持的工作空间路径 " + uri);
+        //     }
+        // }
+    }
+
+    /**
+     * 生成接口请求ts代码
+     * @param path
+     */
+    public async generateRequest(path: string) {
+        const { config, documents } = this;
+        const requestFormate = documents.getRequest(path);
+        if (!requestFormate) {
+            return;
+        }
+        documents.startTypeCache();
+        const requestCode = requestFormate.toString();
+        documents.endTypeCache();
+        const entityCode = formateSchemas(documents.getTypeCache());
+
+        const doc = await vscode.workspace.openTextDocument({
+            language: "typescript",
+            content: requestCode + "\n\n\n" + entityCode,
+        });
+        await vscode.window.showTextDocument(doc);
     }
 
     public static initInstance(instance: Control, documents: SwaggerDocumentMultiple, config: SwaggerConfig) {

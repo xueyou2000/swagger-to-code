@@ -45,7 +45,7 @@ export default class UI {
         });
 
         if (result) {
-            console.log("选择", result);
+            this.control.generateRequest(result.label);
         }
     }
 

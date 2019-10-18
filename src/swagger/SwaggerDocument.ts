@@ -99,7 +99,7 @@ export default class SwaggerDocument {
      * 转换实体名称
      * @param entityName 实体名称，可以是definitions下的key名称, 也可以是#/definitions/AdSetMeal这种引用
      */
-    private converEntityName(entityName: string) {
+    public converEntityName(entityName: string) {
         return entityName.indexOf("#/definitions/") === -1 ? entityName : entityName.replace("#/definitions/", "");
     }
 
@@ -109,7 +109,7 @@ export default class SwaggerDocument {
      */
     public toEntitySchema(entityOrName: string | SwaggerEntity): SwaggerEntitySchema {
         if (typeof entityOrName === "string" && isGenericName(entityOrName)) {
-            return this.resolveGenericEntityName(entityOrName);
+            return this.resolveGenericEntityName(this.converEntityName(entityOrName));
         } else {
             return this.entityToSchema(this.findEntity(entityOrName));
         }
@@ -170,7 +170,7 @@ export default class SwaggerDocument {
         names.forEach((name) => {
             if (name in definitions) {
                 this.entityToSchema(this.findEntity(name));
-            } else {
+            } else if (!(name in SwaggerTypeConver)) {
                 throw new Error(`不存在 ${name} 定义`);
             }
         });
@@ -289,7 +289,7 @@ export default class SwaggerDocument {
      * @description 在很多请求方法中选择最优的
      * @param paths
      */
-    private pickerInterface(paths: SwaggerPaths) {
+    public pickerInterface(paths: SwaggerPaths) {
         if ("post" in paths) {
             if (paths.post) {
                 paths.post.method = "get";

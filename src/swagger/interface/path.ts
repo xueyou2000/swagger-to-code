@@ -1,21 +1,48 @@
 import { SwaggerEntity } from "./propertie";
 
 /**
+ * 转换后的参数
+ */
+export interface SwaggerParameterCover {
+    /**
+     * 参数名称
+     */
+    name: string;
+    /**
+     * 参数所属位置
+     */
+    in: "header" | "body" | "path";
+    /**
+     * 是否必填
+     */
+    required: boolean;
+    /**
+     * 类型
+     * @description 可以直接使用的ts类型
+     */
+    type: string;
+    /**
+     * 说明
+     */
+    description: string;
+}
+
+/**
  * 接口请求参数
  */
 export interface SwaggerParameter extends SwaggerEntity {
     /**
      * 参数名称
      */
-    name?: string;
+    name: string;
     /**
      * 参数所属位置
      */
-    in?: "header" | "body" | "path";
+    in: "header" | "body" | "path";
     /**
      * 是否必填
      */
-    required?: boolean;
+    required: boolean;
     /**
      * 架构
      * @description
@@ -54,7 +81,7 @@ export interface SwaggerPath {
     /**
      * 响应
      */
-    responses?: {
+    responses: {
         200: {
             description?: string;
             schema?: SwaggerEntity;
