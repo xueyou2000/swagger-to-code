@@ -12,6 +12,27 @@
                 "type": "string"
             }
         },
+        "generic": {
+            "description": "泛型类型配置",
+            "type": "object",
+            "properties": {
+                "generic": {
+                    "description": "泛型类型列表",
+                    "default": [
+                        "T"
+                    ],
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "properties": {
+                    "description": "泛型字段",
+                    "type": "object"
+                }
+            }
+        },
         "out": {
             "type": "string",
             "description": "接口输出目录",

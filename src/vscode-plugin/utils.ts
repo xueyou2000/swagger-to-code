@@ -103,7 +103,7 @@ export async function readConfig(url: URL) {
  * @param {*} tpls
  * @param {*} data
  */
-function tpl(tpls: string, data: any) {
+export function tpl(tpls: string, data: any) {
     return tpls
         .replace(/{{(.*?)}}/g, function($1, $2) {
             return data[$2] === undefined ? $1 : data[$2];
@@ -117,7 +117,7 @@ function tpl(tpls: string, data: any) {
  * 驼峰转换下划线
  * @param {*} name
  */
-function toLine(name: string) {
+export function toLine(name: string) {
     let result = name.replace(/([A-Z])/g, "-$1").toLowerCase();
     if (result[0] === "-") {
         return result.slice(1);
@@ -130,7 +130,7 @@ function toLine(name: string) {
  * 首字母大写
  * @param {*} name
  */
-function toUpcase(name: string) {
+export function toUpcase(name: string) {
     return name[0].toUpperCase() + name.slice(1);
 }
 
@@ -138,7 +138,7 @@ function toUpcase(name: string) {
  * 递归创建目录
  * @param {*} dirname
  */
-function mkdirs(dirname: string) {
+export function mkdirs(dirname: string) {
     if (fs.existsSync(dirname)) {
         return true;
     } else {
@@ -152,6 +152,29 @@ function mkdirs(dirname: string) {
 /**
  * 文件是否存在
  */
-function exists(file: string) {
+export function exists(file: string) {
     return fs.existsSync(file);
+}
+
+/**
+ * 数组去重
+ * @param array
+ */
+export function unique<T>(array: T[]) {
+    return Array.from(new Set(array));
+}
+
+/**
+ * 对象转数组
+ * @param obj
+ */
+export function objectToArray<T = any>(obj: any): T[] {
+    if (!obj) {
+        return [];
+    }
+    const result = [];
+    for (let key in obj) {
+        result.push(obj[key]);
+    }
+    return result;
 }

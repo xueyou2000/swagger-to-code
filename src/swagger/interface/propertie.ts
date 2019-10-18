@@ -1,3 +1,5 @@
+import { GenericSchema } from "./conver";
+
 /**
  * Swagger实体定义
  * @description 对应 Swagger 数据的 definitions中的任意项
@@ -96,6 +98,14 @@ export interface SwaggerEntitySchema {
      * 实体类型描述
      */
     description: string;
+    /**
+     * 是否泛型
+     */
+    generic: boolean;
+    /**
+     * 泛型定义
+     */
+    genericSchema: GenericSchema | null;
     /**
      * 实体类型字段元数据
      */

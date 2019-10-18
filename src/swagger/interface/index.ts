@@ -1,5 +1,6 @@
 import { SwaggerPaths } from "./path";
 import { SwaggerEntitys } from "./propertie";
+import { GenericSchemaConfig } from "./conver";
 
 /**
  * Swagger标签
@@ -76,6 +77,10 @@ export interface SwaggerConfig {
      * @example [ "https://petstore.swagger.io/v2/swagger.json" ]
      */
     "swagger-urls": string[];
+    /**
+     * 泛型配置
+     */
+    generic: GenericSchemaConfig;
     /**
      * 接口输出目录
      */

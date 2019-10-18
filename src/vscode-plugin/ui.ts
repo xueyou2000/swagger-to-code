@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import Control from "./control";
+import { unique } from "./utils";
 
 export default class UI {
     public interfaceBar: vscode.StatusBarItem;
@@ -53,16 +54,17 @@ export default class UI {
      */
     public async showEntityPicker() {
         const { documents } = this.control;
-        const items: vscode.QuickPickItem[] = documents.getEntityList().map((x) => ({
-            label: x.name,
-            description: x.description,
-        }));
+        let items: vscode.QuickPickItem[] = unique(
+            documents.getEntityList().map((x) => ({
+                label: x.name,
+                description: x.description,
+            })),
+        );
         const result = await vscode.window.showQuickPick(items, {
             matchOnDescription: true,
         });
 
         if (result) {
-            console.log("选择", result);
             this.control.generateEntity(result.label);
             // console.log(documents.getEntityCode(result.label));
         }

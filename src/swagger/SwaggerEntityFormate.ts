@@ -1,4 +1,5 @@
 import { SwaggerEntitySchema, SwaggerTypes } from "./interface/propertie";
+import { isGenericName, extractGenericName } from "./utils";
 
 /**
  * 实体定义格式化
@@ -23,7 +24,7 @@ export default class SwaggerEntityFormate {
             throw new Error("properties必须定义");
         }
         properties.forEach((propertie, i) => {
-            const str = `\n\t/** ${propertie.description} */\n\t${propertie.name}?: ${propertie.type};\n`;
+            const str = `\n\t/** ${propertie.description || propertie.name} */\n\t${propertie.name}?: ${propertie.type};\n`;
             code += str;
         });
         return code + `\n}`;
@@ -34,20 +35,15 @@ export default class SwaggerEntityFormate {
      * @description 包含实体信息
      */
     public toString() {
-        const code = `/** ${this.schema.description} */\nexport interface ${this.schema.name} ${this.toInterfaceDefinString()}`;
+        const { name, description, genericSchema } = this.schema;
+        // ["T", "T2"] 泛型列表，转换 <T = any, T2 = any>
+        const genericList =
+            genericSchema &&
+            genericSchema.generic.reduce((prev, current) => {
+                return `${prev ? `${prev}, ` : ""}${current} = any`;
+            }, "");
+        const _name = isGenericName(name) && genericSchema ? `${extractGenericName(name)}<${genericList}>` : name;
+        const code = `/** ${description || extractGenericName(name)} */\nexport interface ${_name} ${this.toInterfaceDefinString()}`;
         return code;
     }
-}
-
-/**
- * 格式化所有类型接口字符串
- * @param types
- */
-export function formateTypes(types: SwaggerTypes) {
-    let code = "";
-    for (let type in types) {
-        const schemaInstance = new SwaggerEntityFormate(types[type]);
-        code += `${schemaInstance.toString()}\n\n`;
-    }
-    return code;
 }

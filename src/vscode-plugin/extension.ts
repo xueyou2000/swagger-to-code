@@ -9,6 +9,7 @@ import SwaggerDocumentMultiple from "../swagger/SwaggerDocumentMultiple.js";
 import SwaggerDocument from "../swagger/SwaggerDocument.js";
 import Control from "./control.js";
 import SwaggerDefaultConfig from "../swagger/SwaggerDefaultConfig.js";
+import * as lodash from "lodash";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -32,14 +33,14 @@ export async function activate(context: vscode.ExtensionContext) {
                     if (uri.scheme === "file") {
                         progress.report({ increment: 0, message: "加载Swagger配置文件" });
                         var config = new url.URL("file://" + path.resolve(uri.fsPath || uri.path));
-                        const swaggerConfig: SwaggerConfig = Object.assign({}, SwaggerDefaultConfig, JSON.parse(readFile(config)));
+                        const swaggerConfig: SwaggerConfig = lodash.merge({}, SwaggerDefaultConfig, JSON.parse(readFile(config)));
                         const sources: SwaggerDocument[] = [];
                         const length = swaggerConfig["swagger-urls"].length;
                         for (let i = 0; i < length; ++i) {
                             const filePath = swaggerConfig["swagger-urls"][i];
                             progress.report({ increment: ((i + 1) / length) * 100, message: "加载Swagger配置文件" });
                             const swaggerData = await readConfig(new url.URL(filePath));
-                            sources.push(new SwaggerDocument(swaggerData));
+                            sources.push(new SwaggerDocument(swaggerData, swaggerConfig));
                         }
                         const documents = new SwaggerDocumentMultiple(sources);
                         Control.getSingleInstance(documents, swaggerConfig);

@@ -3,6 +3,7 @@ import SwaggerDocumentMultiple from "../swagger/SwaggerDocumentMultiple";
 import UI from "./ui";
 import { SwaggerConfig } from "../swagger/interface";
 import * as path from "path";
+import { formateSchemas } from "../swagger/utils";
 
 export default class Control {
     private static singleInstance: Control;
@@ -51,19 +52,29 @@ export default class Control {
     }
 
     /**
-     * 生成实体ts文件
+     * 生成实体ts接口定义
      */
-    public generateEntity(entityName: string) {
+    public async generateEntity(entityName: string) {
         const { config, documents } = this;
-
-        console.log("config ", config);
 
         const folders = vscode.workspace.workspaceFolders;
         if (folders && folders.length > 0) {
             const uri = folders[0].uri;
             if (uri.scheme === "file") {
                 const dist = path.resolve(uri.fsPath, config.out || "./src/api", "types");
-                console.log(dist);
+                documents.startTypeCache();
+                documents.getEntitySchema(entityName);
+                documents.endTypeCache();
+                const code = formateSchemas(documents.getTypeCache());
+                if (!code) {
+                    return;
+                }
+                const doc = await vscode.workspace.openTextDocument({
+                    language: "typescript",
+                    content: code,
+                });
+
+                await vscode.window.showTextDocument(doc);
             } else {
                 console.warn("不支持的工作空间路径 " + uri);
             }

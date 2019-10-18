@@ -1,8 +1,10 @@
 import SwaggerDocument from "./SwaggerDocument";
-import { SwaggerEntitySchema } from "./interface/propertie";
+import { SwaggerEntitySchema, SwaggerTypes } from "./interface/propertie";
 import { SwaggerPath } from "./interface/path";
 import SwaggerPathCover from "./SwaggerPathCover";
 import SwaggerEntityFormate from "./SwaggerEntityFormate";
+import { SwaggerConfig } from "./interface";
+import { objectToArray } from "../vscode-plugin/utils";
 
 /**
  * Swagger多文档管理器
@@ -49,13 +51,14 @@ export default class SwaggerDocumentMultiple {
         let schema: SwaggerEntitySchema | null = null;
         try {
             for (let i = 0; i < sources.length; ++i) {
-                const { definitions } = sources[i].swaggerRaw;
-                if (entityName in definitions) {
+                if (entityName in sources[i].swaggerRaw.definitions) {
                     schema = sources[i].toEntitySchema(entityName);
                 }
             }
         } catch (error) {
             schema = null;
+            console.warn(`解析实体 ${entityName} 失败`);
+            console.error(error);
         }
         return schema;
     }
@@ -100,5 +103,33 @@ export default class SwaggerDocumentMultiple {
         });
 
         return list;
+    }
+
+    /**
+     * 开启类型缓存
+     */
+    public startTypeCache() {
+        const { sources } = this;
+        sources.forEach((x) => x.startTypeCache());
+    }
+
+    /**
+     * 关闭类型缓存
+     */
+    public endTypeCache() {
+        const { sources } = this;
+        sources.forEach((x) => x.endTypeCache());
+    }
+
+    /**
+     * 获取缓存类型
+     */
+    public getTypeCache() {
+        const { sources } = this;
+        let result: SwaggerEntitySchema[] = [];
+        sources.forEach((x) => {
+            result = result.concat(objectToArray<SwaggerEntitySchema>(x.types));
+        });
+        return result;
     }
 }

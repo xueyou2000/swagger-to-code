@@ -1,8 +1,11 @@
-import { Swagger } from "./interface";
+import { Swagger, SwaggerConfig } from "./interface";
 import { SwaggerEntity, SwaggerEntitySchema, SwaggerPropertieMeta, SwaggerTypes } from "./interface/propertie";
 import SwaggerTypeConver from "./SwaggerTypeConver";
 import { SwaggerPaths, SwaggerPath } from "./interface/path";
 import SwaggerPathCover from "./SwaggerPathCover";
+import SwaggerDefaultConfig from "./SwaggerDefaultConfig";
+import * as lodash from "lodash";
+import { extractGenericName, isGenericName } from "./utils";
 
 /**
  * Swagger文档对象
@@ -12,6 +15,11 @@ export default class SwaggerDocument {
      * swagger配置
      */
     private swagger: Swagger;
+
+    /**
+     * Swagger配置
+     */
+    private config: SwaggerConfig;
 
     /**
      * 是否开启类型缓存
@@ -60,7 +68,12 @@ export default class SwaggerDocument {
      * 初始化Swagger文档
      * @param json
      */
-    public constructor(json: string) {
+    public constructor(json: string, config?: SwaggerConfig) {
+        if (config) {
+            this.config = lodash.merge({}, SwaggerDefaultConfig, config);
+        } else {
+            this.config = SwaggerDefaultConfig;
+        }
         this.swagger = JSON.parse(json);
         this._pathCount = this.getPathCount();
         this._entityCount = this.getEntityCount();
@@ -91,6 +104,18 @@ export default class SwaggerDocument {
     }
 
     /**
+     * SwaggerEntity实体定义转SwaggerEntitySchema
+     * @param entity 实体名或实体定义
+     */
+    public toEntitySchema(entityOrName: string | SwaggerEntity): SwaggerEntitySchema {
+        if (typeof entityOrName === "string" && isGenericName(entityOrName)) {
+            return this.resolveGenericEntityName(entityOrName);
+        } else {
+            return this.entityToSchema(this.findEntity(entityOrName));
+        }
+    }
+
+    /**
      * 寻找实体
      * @param entityOrName 实体名称
      */
@@ -111,11 +136,45 @@ export default class SwaggerDocument {
     }
 
     /**
-     * SwaggerEntity实体定义转SwaggerEntitySchema
-     * @param entity 实体名或实体定义
+     * 提取泛型名称
+     * @description WebReturn«PageInfo«AdInfoVo»» 提取为 ["WebReturn«PageInfo«AdInfoVo»»", "PageInfo«AdInfoVo»", "AdInfoVo"]
+     * @param genericName
      */
-    public toEntitySchema(entityOrName: string | SwaggerEntity): SwaggerEntitySchema {
-        return this.entityToSchema(this.findEntity(entityOrName));
+    private extractextractGenericNames(genericName: string) {
+        const names = genericName
+            .split("«")
+            .map((x) => x.replace(/»/g, ""))
+            .reverse();
+        const result = [];
+        let lastName = "";
+
+        for (let i = 0; i < names.length; ++i) {
+            const name = names[i];
+            if (i === 0) {
+                lastName = name;
+            } else {
+                lastName = `${name}«${lastName}»`;
+            }
+            result.push(lastName);
+        }
+        return result.reverse();
+    }
+
+    /**
+     * 解析泛型实体名称
+     * @param name
+     */
+    private resolveGenericEntityName(entityName: string): SwaggerEntitySchema {
+        const { definitions } = this.swagger;
+        const names = this.extractextractGenericNames(entityName);
+        names.forEach((name) => {
+            if (name in definitions) {
+                this.entityToSchema(this.findEntity(name));
+            } else {
+                throw new Error(`不存在 ${name} 定义`);
+            }
+        });
+        return this.entityToSchema(this.findEntity(entityName));
     }
 
     /**
@@ -123,18 +182,36 @@ export default class SwaggerDocument {
      * @param entity 实体
      */
     private entityToSchema(entity: SwaggerEntity): SwaggerEntitySchema {
-        const schema: SwaggerEntitySchema = { name: entity.title, description: entity.description || entity.title, properties: [] };
+        const generic = isGenericName(entity.title);
+        const genericName = extractGenericName(entity.title);
+        const schema: SwaggerEntitySchema = {
+            name: entity.title,
+            description: entity.description || "",
+            properties: [],
+            generic,
+            genericSchema: null,
+        };
+
         // 使用缓存类型
-        if (schema.name in this.types) {
-            return this.types[schema.name];
+        if (entity.title in this.types) {
+            return this.types[entity.title];
         }
+
+        // 寻找对应泛型配置
+        const genericConfig = generic ? this.config.generic[genericName] : null;
+        schema.genericSchema = genericConfig;
 
         if (entity.type === "object") {
             if (entity.properties) {
                 for (let name in entity.properties) {
                     const entityDefin = entity.properties[name];
-                    const meta: SwaggerPropertieMeta = { name, description: entityDefin.description || name, type: "any" };
-                    meta.type = this.entitytoTypeName(entityDefin);
+                    // todo: 如果在泛型配置中找到, 就将对应的 type 设置成泛型 T
+                    const meta: SwaggerPropertieMeta = { name, description: entityDefin.description || "", type: "any" };
+                    if (genericConfig && name in genericConfig.properties) {
+                        meta.type = genericConfig.properties[name];
+                    } else {
+                        meta.type = this.entitytoTypeName(entityDefin);
+                    }
                     schema.properties.push(meta);
                 }
             } else {
@@ -148,7 +225,7 @@ export default class SwaggerDocument {
         }
 
         // 加入缓存
-        this._types[schema.name] = schema;
+        this._types[entity.title] = schema;
         return schema;
     }
 
@@ -191,6 +268,13 @@ export default class SwaggerDocument {
      */
     public endTypeCache() {
         this._cache = false;
+    }
+
+    /**
+     * 清除缓存类型
+     */
+    public cleanTypeCache() {
+        this._types = {};
     }
 
     /**

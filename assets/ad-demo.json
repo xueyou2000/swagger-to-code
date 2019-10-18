@@ -1,0 +1,3666 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "MEBT API中心!",
+        "version": "1.0",
+        "title": "MEBT RESTful APIS",
+        "contact": {
+            "name": "qiujian",
+            "email": "359072606@qq.com"
+        }
+    },
+    "host": "xueyou.lan:6004",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "广告使用详情",
+            "description": "Ad Use Detail Controller"
+        },
+        {
+            "name": "广告信息",
+            "description": "Ad Info Controller"
+        },
+        {
+            "name": "广告套餐",
+            "description": "Ad Set Meal Controller"
+        },
+        {
+            "name": "广告套餐使用相关",
+            "description": "Ad Use Controller"
+        },
+        {
+            "name": "广告套餐使用量",
+            "description": "Ad Meal Use Controller"
+        },
+        {
+            "name": "广告投放",
+            "description": "Throw In Strategy Controller"
+        }
+    ],
+    "paths": {
+        "/adInfo/create": {
+            "post": {
+                "tags": [
+                    "广告信息"
+                ],
+                "summary": "新增广告信息数据",
+                "description": "新增广告信息数据",
+                "operationId": "createUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AdInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdInfo»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adInfo/delete/{id}": {
+            "post": {
+                "tags": [
+                    "广告信息"
+                ],
+                "summary": "根据id删除广告信息",
+                "description": "根据id删除广告信息",
+                "operationId": "deleteUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adInfo/export": {
+            "post": {
+                "tags": [
+                    "广告信息"
+                ],
+                "summary": "导出",
+                "description": "导出",
+                "operationId": "exportUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/AdInfoDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adInfo/findAdInfoByCode": {
+            "post": {
+                "tags": [
+                    "广告信息"
+                ],
+                "summary": "通过code查询广告信息",
+                "description": "通过code查询广告信息",
+                "operationId": "findAdInfoByCodeUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "description": "code",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdInfo»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adInfo/findAdInfoListByType": {
+            "post": {
+                "tags": [
+                    "广告信息"
+                ],
+                "summary": "通过广告商类型随机取5条数据",
+                "description": "通过广告商类型随机取5条数据",
+                "operationId": "findAdInfoListByTypeUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "type",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/AdInfo"
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adInfo/findById/{id}": {
+            "post": {
+                "tags": [
+                    "广告信息"
+                ],
+                "summary": "通过id查询广告信息",
+                "description": "通过id查询广告信息",
+                "operationId": "findByIdUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdInfo»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adInfo/findByPage/{pageNum}/{pageSize}": {
+            "post": {
+                "tags": [
+                    "广告信息"
+                ],
+                "summary": "分页查询广告信息",
+                "description": "按条件分页查询广告信息",
+                "operationId": "findByPageUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/AdInfoDto"
+                        }
+                    },
+                    {
+                        "name": "pageNum",
+                        "in": "path",
+                        "description": "页码",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "path",
+                        "description": "页面大小",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«PageInfo«AdInfoVo»»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adInfo/findByType/{type}": {
+            "post": {
+                "tags": [
+                    "广告信息"
+                ],
+                "summary": "通过类型type查询广告信息",
+                "description": "通过类型type查询广告信息",
+                "operationId": "findByTypeUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "description": "type",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«object»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adInfo/update": {
+            "post": {
+                "tags": [
+                    "广告信息"
+                ],
+                "summary": "更新广告信息数据",
+                "description": "更新广告信息数据",
+                "operationId": "updateUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AdInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdInfo»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adInfo/updateAdUseByAdCode/{code}/{adOrderCode}": {
+            "post": {
+                "tags": [
+                    "广告信息"
+                ],
+                "summary": "通过广告编号code更新广告使用量信息",
+                "description": "通过广告编号code更新广告使用量信息",
+                "operationId": "updateAdUseByAdCodeUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "code",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "adOrderCode",
+                        "in": "path",
+                        "description": "adOrderCode",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adMealUse/create": {
+            "post": {
+                "tags": [
+                    "广告套餐使用量"
+                ],
+                "summary": "新增广告套餐使用量数据",
+                "description": "新增广告套餐使用量数据",
+                "operationId": "createUsingPOST_1",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AdMealUse"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdMealUse»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adMealUse/delete/{id}": {
+            "post": {
+                "tags": [
+                    "广告套餐使用量"
+                ],
+                "summary": "根据id删除广告套餐使用量",
+                "description": "根据id删除广告套餐使用量",
+                "operationId": "deleteUsingPOST_1",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adMealUse/export": {
+            "post": {
+                "tags": [
+                    "广告套餐使用量"
+                ],
+                "summary": "导出",
+                "description": "导出",
+                "operationId": "exportUsingPOST_1",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/AdMealUseDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adMealUse/findByCode/{code}": {
+            "post": {
+                "tags": [
+                    "广告套餐使用量"
+                ],
+                "summary": "通过广告商编号code查询广告套餐使用量",
+                "description": "通过广告商编号code查询广告套餐使用量",
+                "operationId": "findByCodeUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "code",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdMealUse»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adMealUse/findByCondition": {
+            "post": {
+                "tags": [
+                    "广告套餐使用量"
+                ],
+                "summary": "通过条件查询广告套餐使用量",
+                "description": "通过条件查询广告套餐使用量",
+                "operationId": "findByConditionUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AdMealUse"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdMealUse»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adMealUse/findById/{id}": {
+            "post": {
+                "tags": [
+                    "广告套餐使用量"
+                ],
+                "summary": "通过id查询广告套餐使用量",
+                "description": "通过id查询广告套餐使用量",
+                "operationId": "findByIdUsingPOST_1",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdMealUse»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adMealUse/findByPage/{pageNum}/{pageSize}": {
+            "post": {
+                "tags": [
+                    "广告套餐使用量"
+                ],
+                "summary": "分页查询广告套餐使用量",
+                "description": "按条件分页查询广告套餐使用量",
+                "operationId": "findByPageUsingPOST_1",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/AdMealUseDto"
+                        }
+                    },
+                    {
+                        "name": "pageNum",
+                        "in": "path",
+                        "description": "页码",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "path",
+                        "description": "页面大小",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdMealUse»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adMealUse/update": {
+            "post": {
+                "tags": [
+                    "广告套餐使用量"
+                ],
+                "summary": "更新广告套餐使用量数据",
+                "description": "更新广告套餐使用量数据",
+                "operationId": "updateUsingPOST_1",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AdMealUse"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdMealUse»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adSetMeal/buyAdSetMeal": {
+            "post": {
+                "tags": [
+                    "广告套餐"
+                ],
+                "summary": "购买广告套餐",
+                "description": "购买广告套餐",
+                "operationId": "buyAdSetMealUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "buyAdSetMealDto",
+                        "description": "buyAdSetMealDto",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/BuyAdSetMealDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdSetMealVo»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adSetMeal/create": {
+            "post": {
+                "tags": [
+                    "广告套餐"
+                ],
+                "summary": "新增广告套餐数据",
+                "description": "新增广告套餐数据",
+                "operationId": "createUsingPOST_2",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AdSetMeal"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdSetMeal»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adSetMeal/delete/{id}": {
+            "post": {
+                "tags": [
+                    "广告套餐"
+                ],
+                "summary": "根据id删除广告套餐",
+                "description": "根据id删除广告套餐",
+                "operationId": "deleteUsingPOST_2",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adSetMeal/export": {
+            "post": {
+                "tags": [
+                    "广告套餐"
+                ],
+                "summary": "导出",
+                "description": "导出",
+                "operationId": "exportUsingPOST_2",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/AdSetMealDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adSetMeal/findByCode/{code}": {
+            "post": {
+                "tags": [
+                    "广告套餐"
+                ],
+                "summary": "通过code查询广告套餐",
+                "description": "通过code查询广告套餐",
+                "operationId": "findByCodeUsingPOST_1",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "code",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdSetMeal»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adSetMeal/findByCondition": {
+            "post": {
+                "tags": [
+                    "广告套餐"
+                ],
+                "summary": "通过条件查询广告套餐",
+                "description": "通过条件查询广告套餐",
+                "operationId": "findByConditionUsingPOST_1",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AdSetMeal"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdSetMeal»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adSetMeal/findById/{id}": {
+            "post": {
+                "tags": [
+                    "广告套餐"
+                ],
+                "summary": "通过id查询广告套餐",
+                "description": "通过id查询广告套餐",
+                "operationId": "findByIdUsingPOST_2",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdSetMeal»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adSetMeal/findByPage/{pageNum}/{pageSize}": {
+            "post": {
+                "tags": [
+                    "广告套餐"
+                ],
+                "summary": "分页查询广告套餐",
+                "description": "按条件分页查询广告套餐",
+                "operationId": "findByPageUsingPOST_2",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/AdSetMealDto"
+                        }
+                    },
+                    {
+                        "name": "pageNum",
+                        "in": "path",
+                        "description": "页码",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "path",
+                        "description": "页面大小",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdSetMeal»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adSetMeal/findByUserNo/{userNo}": {
+            "post": {
+                "tags": [
+                    "广告套餐"
+                ],
+                "summary": "根据userNo查询广告套餐",
+                "description": "根据userNo查询广告套餐",
+                "operationId": "findByUserNoUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "userNo",
+                        "in": "path",
+                        "description": "userNo",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/AdSetMeal"
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adSetMeal/payAdMeal/{id}": {
+            "post": {
+                "tags": [
+                    "广告套餐"
+                ],
+                "summary": "根据id购买广告套餐",
+                "description": "根据id购买广告套餐",
+                "operationId": "payAdMealUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ModelAndView"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adSetMeal/update": {
+            "post": {
+                "tags": [
+                    "广告套餐"
+                ],
+                "summary": "更新广告套餐数据",
+                "description": "更新广告套餐数据",
+                "operationId": "updateUsingPOST_2",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AdSetMeal"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdSetMeal»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adUse/findByPage/{pageNum}/{pageSize}": {
+            "post": {
+                "tags": [
+                    "广告套餐使用相关"
+                ],
+                "summary": "分页查询广告套餐使用相关",
+                "description": "按条件分页查询广告套餐使用相关",
+                "operationId": "findByPageUsingPOST_3",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/AdUseDto"
+                        }
+                    },
+                    {
+                        "name": "pageNum",
+                        "in": "path",
+                        "description": "页码",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "path",
+                        "description": "页面大小",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdUseVo»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adUseDetail/create": {
+            "post": {
+                "tags": [
+                    "广告使用详情"
+                ],
+                "summary": "新增广告使用详情数据",
+                "description": "新增广告使用详情数据",
+                "operationId": "createUsingPOST_3",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AdUseDetail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdUseDetail»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adUseDetail/delete/{id}": {
+            "post": {
+                "tags": [
+                    "广告使用详情"
+                ],
+                "summary": "根据id删除广告使用详情",
+                "description": "根据id删除广告使用详情",
+                "operationId": "deleteUsingPOST_3",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adUseDetail/export": {
+            "post": {
+                "tags": [
+                    "广告使用详情"
+                ],
+                "summary": "导出",
+                "description": "导出",
+                "operationId": "exportUsingPOST_3",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/AdUseDetailDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adUseDetail/findById/{id}": {
+            "post": {
+                "tags": [
+                    "广告使用详情"
+                ],
+                "summary": "通过id查询广告使用详情",
+                "description": "通过id查询广告使用详情",
+                "operationId": "findByIdUsingPOST_3",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdUseDetail»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adUseDetail/findByPage/{pageNum}/{pageSize}": {
+            "post": {
+                "tags": [
+                    "广告使用详情"
+                ],
+                "summary": "分页查询广告使用详情",
+                "description": "按条件分页查询广告使用详情",
+                "operationId": "findByPageUsingPOST_4",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/AdUseDetailDto"
+                        }
+                    },
+                    {
+                        "name": "pageNum",
+                        "in": "path",
+                        "description": "页码",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "path",
+                        "description": "页面大小",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdUseDetail»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/adUseDetail/update": {
+            "post": {
+                "tags": [
+                    "广告使用详情"
+                ],
+                "summary": "更新广告使用详情数据",
+                "description": "更新广告使用详情数据",
+                "operationId": "updateUsingPOST_3",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AdUseDetail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«AdUseDetail»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/throwInStrategy/create": {
+            "post": {
+                "tags": [
+                    "广告投放"
+                ],
+                "summary": "新增广告投放数据",
+                "description": "新增广告投放数据",
+                "operationId": "createUsingPOST_4",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ThrowInStrategy"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«ThrowInStrategy»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/throwInStrategy/delete/{id}": {
+            "post": {
+                "tags": [
+                    "广告投放"
+                ],
+                "summary": "根据id删除广告投放",
+                "description": "根据id删除广告投放",
+                "operationId": "deleteUsingPOST_4",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/throwInStrategy/export": {
+            "post": {
+                "tags": [
+                    "广告投放"
+                ],
+                "summary": "导出",
+                "description": "导出",
+                "operationId": "exportUsingPOST_4",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/ThrowInStrategyDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/throwInStrategy/findById/{id}": {
+            "post": {
+                "tags": [
+                    "广告投放"
+                ],
+                "summary": "通过id查询广告投放",
+                "description": "通过id查询广告投放",
+                "operationId": "findByIdUsingPOST_4",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«ThrowInStrategy»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/throwInStrategy/findByPage/{pageNum}/{pageSize}": {
+            "post": {
+                "tags": [
+                    "广告投放"
+                ],
+                "summary": "分页查询广告投放",
+                "description": "按条件分页查询广告投放",
+                "operationId": "findByPageUsingPOST_5",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/ThrowInStrategyDto"
+                        }
+                    },
+                    {
+                        "name": "pageNum",
+                        "in": "path",
+                        "description": "页码",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "path",
+                        "description": "页面大小",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«ThrowInStrategy»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/throwInStrategy/update": {
+            "post": {
+                "tags": [
+                    "广告投放"
+                ],
+                "summary": "更新广告投放数据",
+                "description": "更新广告投放数据",
+                "operationId": "updateUsingPOST_4",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "令牌",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "pojo",
+                        "description": "pojo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ThrowInStrategy"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/WebReturn«ThrowInStrategy»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "AdInfo": {
+            "type": "object",
+            "properties": {
+                "adImg": {
+                    "type": "string",
+                    "description": "广告图片路径",
+                    "allowEmptyValue": false
+                },
+                "adType": {
+                    "type": "string",
+                    "description": "广告类型",
+                    "allowEmptyValue": false,
+                    "enum": [
+                        "NO_PUBLIC",
+                        "PUBLIC_CLICK",
+                        "CLICK"
+                    ]
+                },
+                "code": {
+                    "type": "string",
+                    "description": "编号",
+                    "allowEmptyValue": false
+                },
+                "description": {
+                    "type": "string",
+                    "description": "描述",
+                    "allowEmptyValue": false
+                },
+                "price": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "广告单价",
+                    "allowEmptyValue": false
+                },
+                "publisher": {
+                    "type": "string",
+                    "description": "发布人",
+                    "allowEmptyValue": false
+                },
+                "sharePrice": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "分润单价",
+                    "allowEmptyValue": false
+                },
+                "status": {
+                    "type": "string",
+                    "description": "状态",
+                    "allowEmptyValue": false,
+                    "enum": [
+                        "AUDIT_REFUSE",
+                        "AUDIT",
+                        "CLOSED",
+                        "PASSED"
+                    ]
+                },
+                "title": {
+                    "type": "string",
+                    "description": "标题",
+                    "allowEmptyValue": false
+                },
+                "url": {
+                    "type": "string",
+                    "description": "连接",
+                    "allowEmptyValue": false
+                }
+            },
+            "title": "AdInfo"
+        },
+        "AdInfoDto": {
+            "type": "object",
+            "properties": {
+                "adInfo": {
+                    "$ref": "#/definitions/AdInfo"
+                },
+                "queryBaseDto": {
+                    "$ref": "#/definitions/QueryBaseDto"
+                }
+            },
+            "title": "AdInfoDto",
+            "description": "广告信息入参类"
+        },
+        "AdInfoVo": {
+            "type": "object",
+            "properties": {
+                "adImg": {
+                    "type": "string",
+                    "description": "广告图片路径",
+                    "allowEmptyValue": false
+                },
+                "adType": {
+                    "type": "string",
+                    "description": "广告类型",
+                    "allowEmptyValue": false,
+                    "enum": [
+                        "NO_PUBLIC",
+                        "PUBLIC_CLICK",
+                        "CLICK"
+                    ]
+                },
+                "adTypeLabel": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string",
+                    "description": "编号",
+                    "allowEmptyValue": false
+                },
+                "description": {
+                    "type": "string",
+                    "description": "描述",
+                    "allowEmptyValue": false
+                },
+                "price": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "广告单价",
+                    "allowEmptyValue": false
+                },
+                "publisher": {
+                    "type": "string",
+                    "description": "发布人",
+                    "allowEmptyValue": false
+                },
+                "sharePrice": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "分润单价",
+                    "allowEmptyValue": false
+                },
+                "status": {
+                    "type": "string",
+                    "description": "状态",
+                    "allowEmptyValue": false,
+                    "enum": [
+                        "AUDIT_REFUSE",
+                        "AUDIT",
+                        "CLOSED",
+                        "PASSED"
+                    ]
+                },
+                "statusLabel": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "标题",
+                    "allowEmptyValue": false
+                },
+                "url": {
+                    "type": "string",
+                    "description": "连接",
+                    "allowEmptyValue": false
+                }
+            },
+            "title": "AdInfoVo",
+            "description": "广告信息视图类"
+        },
+        "AdMealUse": {
+            "type": "object",
+            "properties": {
+                "adMerchantCode": {
+                    "type": "string",
+                    "description": "广告商编号",
+                    "allowEmptyValue": false
+                },
+                "adType": {
+                    "type": "string",
+                    "description": "广告类型",
+                    "allowEmptyValue": false,
+                    "enum": [
+                        "NO_PUBLIC",
+                        "PUBLIC_CLICK",
+                        "CLICK"
+                    ]
+                },
+                "adUseStatus": {
+                    "type": "string",
+                    "description": "广告使用状态",
+                    "allowEmptyValue": false,
+                    "enum": [
+                        "USING",
+                        "TOUSE",
+                        "CLOSED"
+                    ]
+                },
+                "mealCode": {
+                    "type": "string",
+                    "description": "编号",
+                    "allowEmptyValue": false
+                },
+                "mealCount": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "总量",
+                    "allowEmptyValue": false
+                },
+                "used": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "使用量",
+                    "allowEmptyValue": false
+                }
+            },
+            "title": "AdMealUse"
+        },
+        "AdMealUseDto": {
+            "type": "object",
+            "properties": {
+                "adMealUse": {
+                    "$ref": "#/definitions/AdMealUse"
+                },
+                "queryBaseDto": {
+                    "$ref": "#/definitions/QueryBaseDto"
+                }
+            },
+            "title": "AdMealUseDto",
+            "description": "广告套餐使用量入参类"
+        },
+        "AdSetMeal": {
+            "type": "object",
+            "properties": {
+                "adCode": {
+                    "type": "string",
+                    "description": "广告编号",
+                    "allowEmptyValue": false
+                },
+                "adType": {
+                    "type": "string",
+                    "description": "广告类型",
+                    "allowEmptyValue": false,
+                    "enum": [
+                        "NO_PUBLIC",
+                        "PUBLIC_CLICK",
+                        "CLICK"
+                    ]
+                },
+                "code": {
+                    "type": "string",
+                    "description": "编号",
+                    "allowEmptyValue": false
+                },
+                "description": {
+                    "type": "string",
+                    "description": "描述",
+                    "allowEmptyValue": false
+                },
+                "name": {
+                    "type": "string",
+                    "description": "套餐名称",
+                    "allowEmptyValue": false
+                },
+                "price": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "单价",
+                    "allowEmptyValue": false
+                },
+                "setMealCount": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "套餐数量",
+                    "allowEmptyValue": false
+                },
+                "status": {
+                    "type": "string",
+                    "description": "状态",
+                    "allowEmptyValue": false,
+                    "enum": [
+                        "CREATE",
+                        "SHELF",
+                        "OBTAINED"
+                    ]
+                },
+                "totalPrice": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "总价",
+                    "allowEmptyValue": false
+                }
+            },
+            "title": "AdSetMeal"
+        },
+        "AdSetMealDto": {
+            "type": "object",
+            "properties": {
+                "adSetMeal": {
+                    "$ref": "#/definitions/AdSetMeal"
+                },
+                "queryBaseDto": {
+                    "$ref": "#/definitions/QueryBaseDto"
+                }
+            },
+            "title": "AdSetMealDto",
+            "description": "广告套餐入参类"
+        },
+        "AdSetMealVo": {
+            "type": "object",
+            "properties": {
+                "adCode": {
+                    "type": "string",
+                    "description": "广告编号",
+                    "allowEmptyValue": false
+                },
+                "adMerchantCode": {
+                    "type": "string"
+                },
+                "adType": {
+                    "type": "string",
+                    "description": "广告类型",
+                    "allowEmptyValue": false,
+                    "enum": [
+                        "NO_PUBLIC",
+                        "PUBLIC_CLICK",
+                        "CLICK"
+                    ]
+                },
+                "adTypeLabel": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string",
+                    "description": "编号",
+                    "allowEmptyValue": false
+                },
+                "description": {
+                    "type": "string",
+                    "description": "描述",
+                    "allowEmptyValue": false
+                },
+                "name": {
+                    "type": "string",
+                    "description": "套餐名称",
+                    "allowEmptyValue": false
+                },
+                "payOrderNo": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "单价",
+                    "allowEmptyValue": false
+                },
+                "setMealCount": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "套餐数量",
+                    "allowEmptyValue": false
+                },
+                "status": {
+                    "type": "string",
+                    "description": "状态",
+                    "allowEmptyValue": false,
+                    "enum": [
+                        "CREATE",
+                        "SHELF",
+                        "OBTAINED"
+                    ]
+                },
+                "statusLabel": {
+                    "type": "string"
+                },
+                "totalPrice": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "总价",
+                    "allowEmptyValue": false
+                },
+                "uuid": {
+                    "type": "string"
+                }
+            },
+            "title": "AdSetMealVo",
+            "description": "广告套餐视图类"
+        },
+        "AdUse": {
+            "type": "object",
+            "properties": {
+                "adCode": {
+                    "type": "string"
+                },
+                "adMerchantCode": {
+                    "type": "string"
+                },
+                "adOrderCode": {
+                    "type": "string"
+                },
+                "adType": {
+                    "type": "string"
+                },
+                "createTime": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "endCreateTime": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "mealCode": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "string"
+                },
+                "setMealCount": {
+                    "type": "string"
+                },
+                "startCreateTime": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "totalPrice": {
+                    "type": "string"
+                },
+                "used": {
+                    "type": "string"
+                }
+            },
+            "title": "AdUse"
+        },
+        "AdUseDetail": {
+            "type": "object",
+            "properties": {
+                "adCode": {
+                    "type": "string",
+                    "description": "广告编号",
+                    "allowEmptyValue": false
+                },
+                "adMealUseCode": {
+                    "type": "string",
+                    "description": "广告使用量编号",
+                    "allowEmptyValue": false
+                },
+                "adSetMealCode": {
+                    "type": "string",
+                    "description": "广告套餐编号",
+                    "allowEmptyValue": false
+                },
+                "merchantNo": {
+                    "type": "string",
+                    "description": "商家编号",
+                    "allowEmptyValue": false
+                }
+            },
+            "title": "AdUseDetail"
+        },
+        "AdUseDetailDto": {
+            "type": "object",
+            "properties": {
+                "adUseDetail": {
+                    "$ref": "#/definitions/AdUseDetail"
+                },
+                "queryBaseDto": {
+                    "$ref": "#/definitions/QueryBaseDto"
+                }
+            },
+            "title": "AdUseDetailDto",
+            "description": "广告使用详情入参类"
+        },
+        "AdUseDto": {
+            "type": "object",
+            "properties": {
+                "adUse": {
+                    "$ref": "#/definitions/AdUse"
+                },
+                "endCreateTime": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "queryBaseDto": {
+                    "$ref": "#/definitions/QueryBaseDto"
+                },
+                "startCreateTime": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            },
+            "title": "AdUseDto"
+        },
+        "AdUseVo": {
+            "type": "object",
+            "properties": {
+                "adCode": {
+                    "type": "string"
+                },
+                "adMerchantCode": {
+                    "type": "string"
+                },
+                "adOrderCode": {
+                    "type": "string"
+                },
+                "adType": {
+                    "type": "string"
+                },
+                "adTypeLabel": {
+                    "type": "string"
+                },
+                "createTime": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "mealCode": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "string"
+                },
+                "setMealCount": {
+                    "type": "string"
+                },
+                "totalPrice": {
+                    "type": "string"
+                },
+                "used": {
+                    "type": "string"
+                }
+            },
+            "title": "AdUseVo"
+        },
+        "BuyAdSetMealDto": {
+            "type": "object",
+            "properties": {
+                "adCode": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "setMealCount": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            },
+            "title": "BuyAdSetMealDto",
+            "description": "广告信息入参类"
+        },
+        "CompareColumn": {
+            "type": "object",
+            "properties": {
+                "columnsField": {
+                    "type": "string"
+                },
+                "compareType": {
+                    "type": "string",
+                    "enum": [
+                        "GreaterThan",
+                        "LessThan",
+                        "NotEqual",
+                        "Equal",
+                        "GreaterThanOrEqual",
+                        "LessThanOrEqual"
+                    ]
+                },
+                "value": {
+                    "type": "object"
+                }
+            },
+            "title": "CompareColumn"
+        },
+        "DateTimeInterval": {
+            "type": "object",
+            "properties": {
+                "columnsField": {
+                    "type": "string"
+                },
+                "startTime": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "endTime": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            },
+            "title": "DateTimeInterval"
+        },
+        "InColumn": {
+            "type": "object",
+            "properties": {
+                "columnsField": {
+                    "type": "string"
+                },
+                "columnsValue": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                }
+            },
+            "title": "InColumn"
+        },
+        "ModelAndView": {
+            "type": "object",
+            "properties": {
+                "empty": {
+                    "type": "boolean"
+                },
+                "modelMap": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "object"
+                    }
+                },
+                "reference": {
+                    "type": "boolean"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "100",
+                        "101",
+                        "102",
+                        "103",
+                        "200",
+                        "201",
+                        "202",
+                        "203",
+                        "204",
+                        "205",
+                        "206",
+                        "207",
+                        "208",
+                        "226",
+                        "300",
+                        "301",
+                        "302",
+                        "303",
+                        "304",
+                        "305",
+                        "307",
+                        "308",
+                        "400",
+                        "401",
+                        "402",
+                        "403",
+                        "404",
+                        "405",
+                        "406",
+                        "407",
+                        "408",
+                        "409",
+                        "410",
+                        "411",
+                        "412",
+                        "413",
+                        "414",
+                        "415",
+                        "416",
+                        "417",
+                        "418",
+                        "419",
+                        "420",
+                        "421",
+                        "422",
+                        "423",
+                        "424",
+                        "426",
+                        "428",
+                        "429",
+                        "431",
+                        "451",
+                        "500",
+                        "501",
+                        "502",
+                        "503",
+                        "504",
+                        "505",
+                        "506",
+                        "507",
+                        "508",
+                        "509",
+                        "510",
+                        "511"
+                    ]
+                },
+                "view": {
+                    "$ref": "#/definitions/View"
+                },
+                "viewName": {
+                    "type": "string"
+                }
+            },
+            "title": "ModelAndView"
+        },
+        "NumberRange": {
+            "type": "object",
+            "properties": {
+                "columnsField": {
+                    "type": "string"
+                },
+                "min": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "max": {
+                    "type": "number",
+                    "format": "double"
+                }
+            },
+            "title": "NumberRange"
+        },
+        "PageInfo«AdInfoVo»": {
+            "type": "object",
+            "properties": {
+                "endRow": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "firstPage": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "hasNextPage": {
+                    "type": "boolean"
+                },
+                "hasPreviousPage": {
+                    "type": "boolean"
+                },
+                "isFirstPage": {
+                    "type": "boolean"
+                },
+                "isLastPage": {
+                    "type": "boolean"
+                },
+                "lastPage": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AdInfoVo"
+                    }
+                },
+                "navigateFirstPage": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "navigateLastPage": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "navigatePages": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "navigatepageNums": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "nextPage": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "pageNum": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "pages": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "prePage": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "size": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "startRow": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "total": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "title": "PageInfo«AdInfoVo»"
+        },
+        "QueryBaseDto": {
+            "type": "object",
+            "properties": {
+                "compareColumns": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CompareColumn"
+                    }
+                },
+                "dateTimeIntervals": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/DateTimeInterval"
+                    }
+                },
+                "inColumns": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/InColumn"
+                    }
+                },
+                "numberRanges": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/NumberRange"
+                    }
+                },
+                "orderByClause": {
+                    "type": "string"
+                },
+                "pageNum": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "queryType": {
+                    "type": "string",
+                    "enum": [
+                        "PAGE",
+                        "LIST"
+                    ]
+                }
+            },
+            "title": "QueryBaseDto"
+        },
+        "ThrowInStrategy": {
+            "type": "object",
+            "properties": {
+                "adCode": {
+                    "type": "string",
+                    "description": "广告编号",
+                    "allowEmptyValue": false
+                },
+                "city": {
+                    "type": "string",
+                    "description": "市",
+                    "allowEmptyValue": false
+                },
+                "code": {
+                    "type": "string",
+                    "description": "编号",
+                    "allowEmptyValue": false
+                },
+                "deliveryMethod": {
+                    "type": "string",
+                    "description": "投放方式",
+                    "allowEmptyValue": false,
+                    "enum": [
+                        "BY_MERCHANT",
+                        "BY_AREA",
+                        "BY_INDUSTRY",
+                        "OTHER"
+                    ]
+                },
+                "latitude": {
+                    "type": "string",
+                    "description": "纬度",
+                    "allowEmptyValue": false
+                },
+                "longitude": {
+                    "type": "string",
+                    "description": "经度",
+                    "allowEmptyValue": false
+                },
+                "merchantNos": {
+                    "type": "string",
+                    "description": "商家编号组",
+                    "allowEmptyValue": false
+                },
+                "merchantTypeCode": {
+                    "type": "string",
+                    "description": "行业类别",
+                    "allowEmptyValue": false
+                },
+                "province": {
+                    "type": "string",
+                    "description": "省",
+                    "allowEmptyValue": false
+                },
+                "status": {
+                    "type": "string",
+                    "description": "状态",
+                    "allowEmptyValue": false,
+                    "enum": [
+                        "OPEN",
+                        "CLOSE"
+                    ]
+                }
+            },
+            "title": "ThrowInStrategy"
+        },
+        "ThrowInStrategyDto": {
+            "type": "object",
+            "properties": {
+                "queryBaseDto": {
+                    "$ref": "#/definitions/QueryBaseDto"
+                },
+                "throwInStrategy": {
+                    "$ref": "#/definitions/ThrowInStrategy"
+                }
+            },
+            "title": "ThrowInStrategyDto",
+            "description": "广告投放入参类"
+        },
+        "View": {
+            "type": "object",
+            "properties": {
+                "contentType": {
+                    "type": "string"
+                }
+            },
+            "title": "View"
+        },
+        "WebReturn": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "description": "数据",
+                    "allowEmptyValue": false
+                },
+                "detail": {
+                    "type": "string",
+                    "description": "详细信息",
+                    "allowEmptyValue": false
+                },
+                "msg": {
+                    "type": "string",
+                    "description": "提示信息",
+                    "allowEmptyValue": false
+                },
+                "redirect": {
+                    "type": "string",
+                    "description": "重定向",
+                    "allowEmptyValue": false
+                },
+                "status": {
+                    "type": "string",
+                    "description": "状态码",
+                    "allowEmptyValue": false
+                }
+            },
+            "title": "WebReturn"
+        },
+        "WebReturn«AdInfo»": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "description": "数据",
+                    "allowEmptyValue": false
+                },
+                "detail": {
+                    "type": "string",
+                    "description": "详细信息",
+                    "allowEmptyValue": false
+                },
+                "msg": {
+                    "type": "string",
+                    "description": "提示信息",
+                    "allowEmptyValue": false
+                },
+                "redirect": {
+                    "type": "string",
+                    "description": "重定向",
+                    "allowEmptyValue": false
+                },
+                "status": {
+                    "type": "string",
+                    "description": "状态码",
+                    "allowEmptyValue": false
+                }
+            },
+            "title": "WebReturn«AdInfo»"
+        },
+        "WebReturn«AdMealUse»": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "description": "数据",
+                    "allowEmptyValue": false
+                },
+                "detail": {
+                    "type": "string",
+                    "description": "详细信息",
+                    "allowEmptyValue": false
+                },
+                "msg": {
+                    "type": "string",
+                    "description": "提示信息",
+                    "allowEmptyValue": false
+                },
+                "redirect": {
+                    "type": "string",
+                    "description": "重定向",
+                    "allowEmptyValue": false
+                },
+                "status": {
+                    "type": "string",
+                    "description": "状态码",
+                    "allowEmptyValue": false
+                }
+            },
+            "title": "WebReturn«AdMealUse»"
+        },
+        "WebReturn«AdSetMealVo»": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "description": "数据",
+                    "allowEmptyValue": false
+                },
+                "detail": {
+                    "type": "string",
+                    "description": "详细信息",
+                    "allowEmptyValue": false
+                },
+                "msg": {
+                    "type": "string",
+                    "description": "提示信息",
+                    "allowEmptyValue": false
+                },
+                "redirect": {
+                    "type": "string",
+                    "description": "重定向",
+                    "allowEmptyValue": false
+                },
+                "status": {
+                    "type": "string",
+                    "description": "状态码",
+                    "allowEmptyValue": false
+                }
+            },
+            "title": "WebReturn«AdSetMealVo»"
+        },
+        "WebReturn«AdSetMeal»": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "description": "数据",
+                    "allowEmptyValue": false
+                },
+                "detail": {
+                    "type": "string",
+                    "description": "详细信息",
+                    "allowEmptyValue": false
+                },
+                "msg": {
+                    "type": "string",
+                    "description": "提示信息",
+                    "allowEmptyValue": false
+                },
+                "redirect": {
+                    "type": "string",
+                    "description": "重定向",
+                    "allowEmptyValue": false
+                },
+                "status": {
+                    "type": "string",
+                    "description": "状态码",
+                    "allowEmptyValue": false
+                }
+            },
+            "title": "WebReturn«AdSetMeal»"
+        },
+        "WebReturn«AdUseDetail»": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "description": "数据",
+                    "allowEmptyValue": false
+                },
+                "detail": {
+                    "type": "string",
+                    "description": "详细信息",
+                    "allowEmptyValue": false
+                },
+                "msg": {
+                    "type": "string",
+                    "description": "提示信息",
+                    "allowEmptyValue": false
+                },
+                "redirect": {
+                    "type": "string",
+                    "description": "重定向",
+                    "allowEmptyValue": false
+                },
+                "status": {
+                    "type": "string",
+                    "description": "状态码",
+                    "allowEmptyValue": false
+                }
+            },
+            "title": "WebReturn«AdUseDetail»"
+        },
+        "WebReturn«AdUseVo»": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "description": "数据",
+                    "allowEmptyValue": false
+                },
+                "detail": {
+                    "type": "string",
+                    "description": "详细信息",
+                    "allowEmptyValue": false
+                },
+                "msg": {
+                    "type": "string",
+                    "description": "提示信息",
+                    "allowEmptyValue": false
+                },
+                "redirect": {
+                    "type": "string",
+                    "description": "重定向",
+                    "allowEmptyValue": false
+                },
+                "status": {
+                    "type": "string",
+                    "description": "状态码",
+                    "allowEmptyValue": false
+                }
+            },
+            "title": "WebReturn«AdUseVo»"
+        },
+        "WebReturn«PageInfo«AdInfoVo»»": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "description": "数据",
+                    "allowEmptyValue": false
+                },
+                "detail": {
+                    "type": "string",
+                    "description": "详细信息",
+                    "allowEmptyValue": false
+                },
+                "msg": {
+                    "type": "string",
+                    "description": "提示信息",
+                    "allowEmptyValue": false
+                },
+                "redirect": {
+                    "type": "string",
+                    "description": "重定向",
+                    "allowEmptyValue": false
+                },
+                "status": {
+                    "type": "string",
+                    "description": "状态码",
+                    "allowEmptyValue": false
+                }
+            },
+            "title": "WebReturn«PageInfo«AdInfoVo»»"
+        },
+        "WebReturn«ThrowInStrategy»": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "description": "数据",
+                    "allowEmptyValue": false
+                },
+                "detail": {
+                    "type": "string",
+                    "description": "详细信息",
+                    "allowEmptyValue": false
+                },
+                "msg": {
+                    "type": "string",
+                    "description": "提示信息",
+                    "allowEmptyValue": false
+                },
+                "redirect": {
+                    "type": "string",
+                    "description": "重定向",
+                    "allowEmptyValue": false
+                },
+                "status": {
+                    "type": "string",
+                    "description": "状态码",
+                    "allowEmptyValue": false
+                }
+            },
+            "title": "WebReturn«ThrowInStrategy»"
+        },
+        "WebReturn«object»": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "description": "数据",
+                    "allowEmptyValue": false
+                },
+                "detail": {
+                    "type": "string",
+                    "description": "详细信息",
+                    "allowEmptyValue": false
+                },
+                "msg": {
+                    "type": "string",
+                    "description": "提示信息",
+                    "allowEmptyValue": false
+                },
+                "redirect": {
+                    "type": "string",
+                    "description": "重定向",
+                    "allowEmptyValue": false
+                },
+                "status": {
+                    "type": "string",
+                    "description": "状态码",
+                    "allowEmptyValue": false
+                }
+            },
+            "title": "WebReturn«object»"
+        }
+    }
+}
