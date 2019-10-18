@@ -3,7 +3,7 @@
 	"displayName": "swagger-to-code",
 	"description": "swagger文档代码生成",
 	"version": "0.0.2",
-	"icon": "./assets/logo.png",
+	"icon": "logo.png",
 	"publisher": "XueYou",
 	"license": "MIT",
 	"engines": {
