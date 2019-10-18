@@ -82,7 +82,7 @@ export interface SwaggerPath {
      * 响应
      */
     responses: {
-        200: {
+        200?: {
             description?: string;
             schema?: SwaggerEntity;
         };

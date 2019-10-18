@@ -159,9 +159,8 @@ export default class SwaggerRequestFormate {
         let type = "";
         if (parameter.type) {
             type = document.entitytoTypeName(parameter);
-        } else if (parameter.schema && parameter.schema.$ref) {
-            document.toEntitySchema(parameter.schema.$ref);
-            type = document.converEntityName(parameter.schema.$ref);
+        } else if (parameter.schema) {
+            type = document.entitytoTypeName(parameter.schema);
         }
         return type.replace("«", "<").replace("»", ">");
     }
@@ -171,14 +170,21 @@ export default class SwaggerRequestFormate {
      */
     private getResponseType() {
         const { request } = this;
-        return this.resoveType(request.responses[200]);
+        try {
+            const res = request.responses[200];
+            return res ? this.resoveType(res) : "";
+        } catch (error) {
+            console.log(this);
+            console.error("解析响应类型失败");
+            return "";
+        }
     }
 
     /**
      * 转换接口请求代码
      */
     public toString() {
-        const { request } = this;
+        const { request, document } = this;
         let code = "";
         if (!request.url) {
             throw new Error("url字段未赋值");
@@ -187,7 +193,8 @@ export default class SwaggerRequestFormate {
         const methodName = this.getMethodName();
         const parameterComments = this.getParameterComments(parameters);
         const parameterList = this.getParameterList(parameters);
-        const url = request.url.replace(/\/\{/g, "/${");
+        const { basePath } = document.swaggerRaw;
+        const url = (basePath !== "/" ? basePath : "") + request.url.replace(/\/\{/g, "/${");
         const restype = this.getResponseType();
 
         const headers = parameters.find((x) => x.in === "header");
@@ -197,7 +204,7 @@ export default class SwaggerRequestFormate {
         code += `export function ${methodName}(${parameterList}) {\n`;
         code += `\treturn fetch${restype ? `<${restype}>` : ""}({\n\t\turl: \`${url}\`,\n`;
         if (body) {
-            code += `\t\tdata: ${body.name},\n`;
+            code += `\t\body: ${body.name},\n`;
         }
         if (headers) {
             code += `\t\t\headers: ${headers.name},\n`;

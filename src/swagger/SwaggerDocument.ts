@@ -126,6 +126,7 @@ export default class SwaggerDocument {
             const entityName = this.converEntityName(entityOrName);
             if (entityName in definitions) {
                 entity = definitions[entityName];
+                entity.title = entityName;
             } else {
                 throw new Error(`无效的实体名称: ${entityName}`);
             }
@@ -182,10 +183,14 @@ export default class SwaggerDocument {
      * @param entity 实体
      */
     private entityToSchema(entity: SwaggerEntity): SwaggerEntitySchema {
-        const generic = isGenericName(entity.title);
-        const genericName = extractGenericName(entity.title);
+        const name = entity.title;
+        if (!name) {
+            throw new Error("gg");
+        }
+        const generic = isGenericName(name);
+        const genericName = extractGenericName(name);
         const schema: SwaggerEntitySchema = {
-            name: entity.title,
+            name: name,
             description: entity.description || "",
             properties: [],
             generic,
@@ -193,8 +198,8 @@ export default class SwaggerDocument {
         };
 
         // 使用缓存类型
-        if (entity.title in this.types) {
-            return this.types[entity.title];
+        if (name in this.types) {
+            return this.types[name];
         }
 
         // 寻找对应泛型配置
@@ -216,7 +221,7 @@ export default class SwaggerDocument {
                 }
             } else {
                 // 真object类型
-                const meta: SwaggerPropertieMeta = { name: entity.title, description: entity.description || entity.title, type: "object" };
+                const meta: SwaggerPropertieMeta = { name: name, description: entity.description || name, type: "object" };
                 schema.properties.push(meta);
             }
         } else {
@@ -225,7 +230,9 @@ export default class SwaggerDocument {
         }
 
         // 加入缓存
-        this._types[entity.title] = schema;
+        if (name) {
+            this._types[name] = schema;
+        }
         return schema;
     }
 
@@ -240,6 +247,7 @@ export default class SwaggerDocument {
             if (!entity.$ref) {
                 throw new Error(`$ref必须赋值 {${JSON.stringify(entity)}}`);
             }
+            entity.title = this.converEntityName(entity.$ref);
             // 将引用类型也加入缓存
             if (this._cache) {
                 this.toEntitySchema(entity.$ref);
@@ -327,6 +335,7 @@ export default class SwaggerDocument {
         const result: SwaggerEntitySchema[] = [];
 
         for (let name in definitions) {
+            definitions[name].title = name;
             result.push(this.toEntitySchema(definitions[name]));
         }
         return result;
