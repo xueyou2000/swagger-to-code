@@ -72,11 +72,7 @@ export default class SwaggerRequestFormate {
             return [];
         }
         const sortParameters = parameters.sort((a, b) => {
-            return (
-                this.parameterInPriority(a.in) +
-                this.parameterRequiredPriority(a.required) -
-                (this.parameterInPriority(b.in) + this.parameterRequiredPriority(b.required))
-            );
+            return this.parameterInPriority(a.in) + this.parameterRequiredPriority(a.required) - (this.parameterInPriority(b.in) + this.parameterRequiredPriority(b.required));
         });
 
         // SwaggerParameter配置转换SwaggerParameterCover
@@ -146,6 +142,10 @@ export default class SwaggerRequestFormate {
      */
     private getParameterList(parameters: SwaggerParameterCover[]) {
         return parameters.reduce((prev, current) => {
+            // 暂不支持 sevlet.name 这种query方法名
+            if (current.name.indexOf(".") !== -1 || current.name.indexOf("[") !== -1) {
+                return prev;
+            }
             return (prev ? `${prev}, ` : "") + `${current.name}${current.required ? "" : "?"}: ${current.type}`;
         }, "");
     }
@@ -204,7 +204,7 @@ export default class SwaggerRequestFormate {
         code += `export function ${methodName}(${parameterList}) {\n`;
         code += `\treturn fetch${restype ? `<${restype}>` : ""}({\n\t\turl: \`${url}\`,\n`;
         if (body) {
-            code += `\t\body: ${body.name},\n`;
+            code += `\t\data: ${body.name},\n`;
         }
         if (headers) {
             code += `\t\t\headers: ${headers.name},\n`;

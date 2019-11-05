@@ -259,7 +259,8 @@ export default class SwaggerDocument {
         if (_entity.type && _entity.type in SwaggerTypeConver) {
             return SwaggerTypeConver[_entity.type].converType(this, _entity);
         } else {
-            throw new Error(`暂不支持的字段类型: ${_entity.type}`);
+            console.warn(`暂不支持的字段类型: ${_entity.type} ${JSON.stringify(_entity, null, 4)}`);
+            return "any";
         }
     }
 
