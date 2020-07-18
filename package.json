@@ -84,6 +84,6 @@
         "url": "git+https://github.com/xueyou2000/swagger-to-code.git"
     },
     "dependencies": {
-        "lodash": "^4.17.15"
+        "lodash": "^4.17.19"
     }
 }
